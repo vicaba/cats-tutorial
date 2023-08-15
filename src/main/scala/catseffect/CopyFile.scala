@@ -1,4 +1,4 @@
-package cats_effect
+package catseffect
 
 import java.io.*
 import cats.effect._
@@ -41,14 +41,14 @@ object CopyFile extends IOApp {
     Resource.make {
       IO.blocking(new FileInputStream(f)) // build
     } { inStream =>
-      IO.blocking(inStream.close()).handleErrorWith(_ => IO.unit) // release
+      IO.blocking(inStream.close()).handleErrorWith(_ => IO.println(s"Error closing ${f.getPath}")) // release
     }
 
   private def outputStream(f: File): Resource[IO, FileOutputStream] =
     Resource.make {
       IO.blocking(new FileOutputStream(f)) // build
     } { outStream =>
-      IO.blocking(outStream.close()).handleErrorWith(_ => IO.unit) // release
+      IO.blocking(outStream.close()).handleErrorWith(_ => IO.println(s"Error closing ${f.getPath}")) // release
     }
 
 }
